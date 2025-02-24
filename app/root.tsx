@@ -10,6 +10,7 @@ import {
 import type { Route } from './+types/root';
 import stylesheet from './app.css?url';
 import Navigation from './common/components/navigation';
+import { Settings } from 'luxon';
 
 export const links: any = () => {
   return [
@@ -28,8 +29,10 @@ export const links: any = () => {
 };
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  Settings.defaultLocale = 'ko';
+  Settings.defaultZone = 'Asia/Seoul';
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="white">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -37,7 +40,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <main className="px-20">{children}</main>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -47,14 +50,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <>
+    <div className="py-20">
       <Navigation
         isLoggedIn={true}
         hasNotifications={true}
         hasMessages={true}
       />
       <Outlet />
-    </>
+    </div>
   );
 }
 

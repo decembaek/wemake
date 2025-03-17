@@ -1,7 +1,17 @@
+import { StarIcon } from 'lucide-react';
 import type { Route } from './+types/product-reviews-page';
 import type { MetaFunction } from 'react-router';
-import { Link } from 'react-router';
 import { Button } from '~/common/components/ui/button';
+import { ReviewCard } from '../components/review-card';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '~/common/components/ui/dialog';
+import CreateReviewDialog from '../components/create-review-dialog';
 
 interface ProductReviewsPageProps extends Route.ComponentProps {}
 
@@ -23,12 +33,29 @@ export const meta: MetaFunction = () => {
 
 export default function ProductReviewsPage() {
   return (
-    <div className="container py-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">제품 리뷰</h1>
-        <Button asChild></Button>
+    <Dialog>
+      <div className="space-y-10 max-w-xl">
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-bold">10 Reviews</h2>
+          <DialogTrigger>
+            <Button variant={'secondary'}>Write a review</Button>
+          </DialogTrigger>
+        </div>
+        <div className="space-y-20">
+          {Array.from({ length: 10 }).map((_, index) => (
+            <ReviewCard
+              key={index}
+              username="Username"
+              displayName="John Doe"
+              avatarUrl="https://github.com/shadcn.png"
+              rating={5}
+              content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos."
+              createdAt="10 days ago"
+            />
+          ))}
+        </div>
       </div>
-      <div className="grid gap-4"></div>
-    </div>
+      <CreateReviewDialog />
+    </Dialog>
   );
 }
